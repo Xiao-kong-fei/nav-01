@@ -56,8 +56,8 @@ $('.addButton').on('click', () => {
 })
 
 window.onbeforeunload = () => {
-    // const string = JSON.stringify(hashMap)
-    // localStorage.setItem('x', string)
+    const string = JSON.stringify(hashMap)
+    localStorage.setItem('x', string)
 }
 
 //点击键盘按键自动跳转网站

@@ -143,13 +143,13 @@ $('.addButton').on('click', function () {
     render();
 });
 
-window.onbeforeunload = function () {}
-// const string = JSON.stringify(hashMap)
-// localStorage.setItem('x', string)
-
+window.onbeforeunload = function () {
+    var string = JSON.stringify(hashMap);
+    localStorage.setItem('x', string);
+};
 
 //点击键盘按键自动跳转网站
-;$(document).on('keypress', function (e) {
+$(document).on('keypress', function (e) {
     var key = e.key;
 
     console.log(key);
@@ -166,4 +166,4 @@ $('.searchForm').on('keypress', function (e) {
     e.stopPropagation();
 });
 },{}]},{},["epB2"], null)
-//# sourceMappingURL=main.b836aa15.map
+//# sourceMappingURL=main.a70159f7.map

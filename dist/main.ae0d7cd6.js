@@ -108,62 +108,54 @@ var $siteList = $('.siteList');
 var $lastLi = $siteList.find('li.last');
 var x = localStorage.getItem('x');
 var xObject = JSON.parse(x);
-var hashMap = xObject || [{ logo: 'A', url: 'https://www.acfun.cn' }, { logo: 'B', url: 'https://www.bilibili.com' }, { logo: 'G', url: 'https://www.juejin.cn' }, { logo: 'Q', url: 'https://www.qq.com' }];
-
+var hashMap = xObject || [{ logo: 'A', url: 'https://www.acfun.cn' }, { logo: 'B', url: 'https://www.bilibili.com' }, { logo: 'J', url: 'https://www.jujin.cn' }, { logo: 'Q', url: 'https://www.qq.com' }];
 var simplifyUrl = function simplifyUrl(url) {
-    return url.replace('https://', '').replace('http://', '').replace('www.', '').replace(/\/.*/); //删除以 / 开头的内容
+  return url.replace('https://', '').replace('http://', '').replace('www.', '').replace(/\/.*/, ''); // 删除 / 开头的内容
 };
 
 var render = function render() {
-    $siteList.find('li:not(.last)').remove();
-    hashMap.forEach(function (node, index) {
-        var $li = $('<li>\n            <div class="site">\n                <div class="logo">' + node.logo + '</div>\n                <div class="link">' + simplifyUrl(node.url) + '</div>\n                <div class="close">\n                    <svg class="icon" >\n                        <use xlink:href="#icon-close-bold"></use>\n                    </svg>\n                </div>\n            </div> \n    </li>').insertBefore($lastLi);
-        $li.on('click', function () {
-            window.open(node.url);
-        });
-        $li.on('click', '.close', function (e) {
-            e.stopPropagation(); //阻止冒泡
-            hashMap.splice(index, 1);
-            render();
-        });
+  $siteList.find('li:not(.last)').remove();
+  hashMap.forEach(function (node, index) {
+    var $li = $('<li>\n      <div class="site">\n        <div class="logo">' + node.logo + '</div>\n        <div class="link">' + simplifyUrl(node.url) + '</div>\n        <div class="close">\n          <svg class="icon">\n            <use xlink:href="#icon-close"></use>\n          </svg>\n        </div>\n      </div>\n    </li>').insertBefore($lastLi);
+    $li.on('click', function () {
+      window.open(node.url);
     });
+    $li.on('click', '.close', function (e) {
+      e.stopPropagation(); // 阻止冒泡
+      hashMap.splice(index, 1);
+      render();
+    });
+  });
 };
+
 render();
 
 $('.addButton').on('click', function () {
-    var url = window.prompt('你要添加啥？');
-
-    if (url.indexOf('http') !== 0) {
-        url = 'https://' + url;
-    }
-    console.log(url);
-    hashMap.push({ logo: simplifyUrl(url)[0].toUpperCase(), url: url });
-    //simplifyUrl(url)[0].toUpperCase()
-    //取简化后的url的第一个字母，再转成大写
-    render();
+  var url = window.prompt('请问你要添加的网址是啥？');
+  if (url.indexOf('http') !== 0) {
+    url = 'https://' + url;
+  }
+  console.log(url);
+  hashMap.push({
+    logo: simplifyUrl(url)[0].toUpperCase(),
+    url: url
+  });
+  render();
 });
 
 window.onbeforeunload = function () {
-    var string = JSON.stringify(hashMap);
-    localStorage.setItem('x', string);
+  var string = JSON.stringify(hashMap);
+  localStorage.setItem('x', string);
 };
 
-//点击键盘按键自动跳转网站
 $(document).on('keypress', function (e) {
-    var key = e.key;
+  var key = e.key;
 
-    console.log(key);
-    for (var i = 0; i < hashMap.length; i++) {
-        if (hashMap[i].logo.toLowerCase() === key) {
-            window.open(hashMap[i].url);
-            //toLowerCase() 把字母变成小写
-        }
+  for (var i = 0; i < hashMap.length; i++) {
+    if (hashMap[i].logo.toLowerCase() === key) {
+      window.open(hashMap[i].url);
     }
-});
-
-//阻止输入框按键冒泡
-$('.searchForm').on('keypress', function (e) {
-    e.stopPropagation();
+  }
 });
 },{}]},{},["epB2"], null)
-//# sourceMappingURL=main.a70159f7.map
+//# sourceMappingURL=/main.ae0d7cd6.map
